@@ -6,10 +6,10 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 public class GameActivity extends Activity {
 
+    private SharedPreferences sPref;
     private Context thisContext = this;
     private Figure figure;
     DrawView drawView;
@@ -32,6 +33,23 @@ public class GameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        sPref = getSharedPreferences("SettingPreferences", MODE_PRIVATE);
+        if (sPref.getString(SettingActivity.HEIGHT, "default") == "default"){
+            GameMaster.setCountField(0);
+        } else {
+            GameMaster.setCountField(Integer.valueOf(sPref.getString(SettingActivity.HEIGHT, "default")));
+        }
+        if (sPref.getString(SettingActivity.SPEED, "default") == "default"){
+            GameMaster.setGameSpeed(5);
+        } else {
+            GameMaster.setGameSpeed(Integer.valueOf(sPref.getString(SettingActivity.SPEED, "default")));
+        }
+        if (sPref.getString(SettingActivity.SHADOW, "true") == "true"){
+            GameMaster.setDisplayShadow(true);
+        } else {
+            GameMaster.setDisplayShadow(false);
+        }
 
         figure = new Figure();
 
@@ -173,7 +191,9 @@ public class GameActivity extends Activity {
 
         GameMaster.paintArea(canvas);
 
-        figure.paintShadow(canvas);
+        if (GameMaster.isDisplayShadow()) {
+            figure.paintShadow(canvas);
+        }
         figure.paint(canvas);
 
         runOnUiThread(new Runnable() {
@@ -198,6 +218,12 @@ public class GameActivity extends Activity {
             Canvas canvas;
             canvas = surfaceHolder.lockCanvas(null);
             //GameArea.paintArea(canvas);
+            /*sPref = getSharedPreferences("SettingPreferences", MODE_PRIVATE);
+            if (sPref.getString(SettingActivity.HEIGHT, "default") == "default"){
+                GameMaster.setCountField(0);
+            } else {
+                GameMaster.setCountField(Integer.valueOf(sPref.getString(SettingActivity.HEIGHT, "default")));
+            }*/
             GameMaster.createArea(canvas);
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
@@ -291,7 +317,7 @@ public class GameActivity extends Activity {
                         }
                         long now = System.currentTimeMillis();
                         long elapsedTime = now - prevTime;
-                        if (elapsedTime > 500) {
+                        if (elapsedTime > 1100-GameMaster.getGameSpeed()*100) {
                             prevTime = now;
                             updatePositions();
                         }

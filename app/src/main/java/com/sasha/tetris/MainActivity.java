@@ -29,7 +29,14 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
-
+        Button buttonSetting = (Button) findViewById(R.id.buttonSetting);
+        buttonSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), SettingActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void startGame(){

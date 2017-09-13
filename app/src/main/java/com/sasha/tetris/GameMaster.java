@@ -33,6 +33,9 @@ public final class GameMaster {
     private static int gameScores = 0;
     public static final int [] SCORES = {100, 300, 700, 1500};
 
+    private static int gameSpeed;
+    private static boolean displayShadow;
+
     public static int getPointStartX() {
         return pointStartX;
     }
@@ -59,6 +62,10 @@ public final class GameMaster {
 
     public static int getCountField() {
         return count_field_height;
+    }
+
+    public static void setCountField(int height) {
+        count_field_height = height;
     }
 
     public static int getPositionBottom(int height, int width) {
@@ -93,31 +100,64 @@ public final class GameMaster {
         }
     }
 
+    public static int getGameSpeed() {
+        return gameSpeed;
+    }
+
+    public static void setGameSpeed(int gameSpeed) {
+        GameMaster.gameSpeed = gameSpeed;
+    }
+
+    public static boolean isDisplayShadow() {
+        return displayShadow;
+    }
+
+    public static void setDisplayShadow(boolean displayShadow) {
+        GameMaster.displayShadow = displayShadow;
+    }
+
     public static void createArea(Canvas canvas){
 
         int width = canvas.getWidth();
         int height = canvas.getHeight();
 
-        int paddingMargin = width/10;
-        paddingLeft = 0 + paddingMargin;
-        paddingRight = width - paddingMargin;
+        paddingTop = 0 + height / 40;             //20
+        paddingBottom = height - height / 20;
 
-        paddingTop = 0 + height/40;             //20
-        paddingBottom = height - height/20;     //6
+        if (count_field_height==0) {
+            int paddingMargin = width / 10;
+            paddingLeft = 0 + paddingMargin;
+            paddingRight = width - paddingMargin;
 
-        setPointStartX(paddingLeft);
-        setPointStartY(paddingTop);
+            setPointStartX(paddingLeft);
+            setPointStartY(paddingTop);
 
-        BLOCK_SIZE = (paddingRight - paddingLeft) / 10;
-        paddingRight = paddingLeft + BLOCK_SIZE * 10;
+            BLOCK_SIZE = (paddingRight - paddingLeft) / 10;
+            paddingRight = paddingLeft + BLOCK_SIZE * 10;
 
-        count_field_height = (paddingBottom - paddingTop)/BLOCK_SIZE;
-        paddingBottom = paddingTop + BLOCK_SIZE * count_field_height;
+            count_field_height = (paddingBottom - paddingTop) / BLOCK_SIZE;
+            paddingBottom = paddingTop + BLOCK_SIZE * count_field_height;
 
-        bottom = new int[count_field_height+1][10];
-        for (int i = 0; i < 10; i++){
-            //bottom[0][i] = 1;
-            bottom[count_field_height][i] = 1;
+            bottom = new int[count_field_height + 1][10];
+            for (int i = 0; i < 10; i++) {
+                //bottom[0][i] = 1;
+                bottom[count_field_height][i] = 1;
+            }
+        } else {
+            BLOCK_SIZE = (paddingBottom - paddingTop) / count_field_height;
+            paddingBottom = paddingTop + BLOCK_SIZE * count_field_height;
+
+            bottom = new int[count_field_height + 1][10];
+            for (int i = 0; i < 10; i++) {
+                bottom[count_field_height][i] = 1;
+            }
+
+            int paddingMargin = (width-BLOCK_SIZE*10)/2;
+            paddingLeft = 0 + paddingMargin;
+            paddingRight = width - paddingMargin;
+
+            setPointStartX(paddingLeft);
+            setPointStartY(paddingTop);
         }
 
     }

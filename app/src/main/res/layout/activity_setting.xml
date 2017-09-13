@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context="com.sasha.tetris.SettingActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:layout_gravity="center"
+            android:gravity="end"
+            android:layout_weight="1"
+            android:text="высота игрового поля: "/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerHeight"
+            android:layout_gravity="center"
+            android:layout_weight="1">
+
+        </Spinner>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:layout_gravity="center"
+            android:gravity="end"
+            android:layout_weight="1"
+            android:text="скорость игры: "/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerSpeed"
+            android:layout_gravity="center"
+            android:layout_weight="1">
+
+        </Spinner>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:layout_gravity="center"
+            android:gravity="end"
+            android:layout_weight="1"
+            android:text="отображение тени: "/>
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/switchShadow"
+            android:layout_weight="1">
+
+        </Switch>
+
+    </LinearLayout>
+
+</LinearLayout>
